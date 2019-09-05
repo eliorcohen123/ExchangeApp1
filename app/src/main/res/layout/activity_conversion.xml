@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Conversion">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Conversion"
+        android:textColor="@color/colorYellowDark"
+        android:textSize="50sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="170dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="From:"
+                android:textColor="@color/colorYellow"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinnerExch1"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:popupBackground="@color/colorPrimary"
+                android:theme="@style/spinnerTheme" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="To:"
+                android:textColor="@color/colorYellow"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinnerExch2"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:popupBackground="@color/colorPrimary"
+                android:theme="@style/spinnerTheme" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/myTextConversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/colorYellowDark"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/myBtnConversion"
+        android:layout_width="100dp"
+        android:layout_height="40sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:text="Convert"
+        android:textColor="@color/colorYellow" />
+</LinearLayout>

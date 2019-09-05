@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Exchange App</string>
+    <string name="api_key">API_KEY</string>
+</resources>
