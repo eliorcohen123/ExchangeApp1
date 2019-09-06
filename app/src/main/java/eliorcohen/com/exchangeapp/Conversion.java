@@ -57,7 +57,8 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     }
 
     private void getDataCurrencies() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey=" + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
+                + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
