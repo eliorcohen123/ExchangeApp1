@@ -88,13 +88,13 @@
         android:textColor="@color/colorYellowDark"
         android:textSize="20sp" />
 
-    <Button
+    <ImageView
         android:id="@+id/myBtnConversion"
-        android:layout_width="100dp"
-        android:layout_height="40sp"
-        android:layout_gravity="center"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
-        android:text="@string/convert"
-        android:textColor="@color/colorYellow" />
+        android:padding="1dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_attach_money_green_24dp" />
 </LinearLayout>

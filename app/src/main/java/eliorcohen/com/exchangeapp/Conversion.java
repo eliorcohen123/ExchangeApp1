@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     private ArrayAdapter<String> spinnerArrayAdapterExchFrom, spinnerArrayAdapterExchTo;
     private ArrayList<String> stringArrayListExchFrom, stringArrayListExchTo;
     private Spinner spinnerExchFrom, spinnerExchTo;
-    private Button myBtnConversion;
+    private ImageView myBtnConversion;
     private TextView myTextConversion;
 
     @Override
