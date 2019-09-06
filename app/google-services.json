@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "132890151191",
+    "firebase_url": "https://stock-exchange-world.firebaseio.com",
+    "project_id": "stock-exchange-world",
+    "storage_bucket": "stock-exchange-world.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132890151191:android:7ef2153fb447e515148f52",
+        "android_client_info": {
+          "package_name": "eliorcohen.com.exchangeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132890151191-t0cbhsc36ukqg2t1ub3hmao5ka1cisek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3sFA0eaWjFJf1PCKA8HwiDGfsVVre7E8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132890151191-t0cbhsc36ukqg2t1ub3hmao5ka1cisek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
