@@ -55,8 +55,8 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     private void initUI() {
         mChartFrom = findViewById(R.id.linechart1);
         mChartTo = findViewById(R.id.linechart2);
-        spinnerHistoryFrom = findViewById(R.id.spinnerHistory1);
-        spinnerHistoryTo = findViewById(R.id.spinnerHistory2);
+        spinnerHistoryFrom = findViewById(R.id.spinnerHistoryFrom);
+        spinnerHistoryTo = findViewById(R.id.spinnerHistoryTo);
         btnHistory = findViewById(R.id.btnHistory);
 
         mChartFrom.setDragEnabled(true);

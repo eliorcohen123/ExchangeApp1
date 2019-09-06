@@ -31,7 +31,7 @@
                 android:textSize="17sp" />
 
             <Spinner
-                android:id="@+id/spinnerHistory1"
+                android:id="@+id/spinnerHistoryFrom"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                 android:textSize="17sp" />
 
             <Spinner
-                android:id="@+id/spinnerHistory2"
+                android:id="@+id/spinnerHistoryTo"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
