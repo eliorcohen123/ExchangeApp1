@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -48,9 +49,8 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     private Legend legendFrom, legendTo;
     private LineDataSet setFrom, setTo;
     private LineData lineDataFrom, lineDataTo;
-    private ArrayAdapter<String> spinnerArrayAdapterHistoryFrom, spinnerArrayAdapterHistoryTo, spinnerArrayAdapterHistory3;
-    private ArrayList<String> stringArrayListHistoryFrom, stringArrayListHistoryTo, stringArrayListHistory3;
-    private Spinner spinnerHistoryFrom, spinnerHistoryTo, spinnerHistory3;
+    private ArrayList<String> stringArrayListHistoryFrom, stringArrayListHistoryTo, stringArrayListHistoryTime;
+    private Spinner spinnerHistoryFrom, spinnerHistoryTo, spinnerHistoryTime;
     private ImageView btnHistory;
     private int selectedColorText, selectedColorSeparate;
 
@@ -66,7 +66,14 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
 
         initUI();
         initListeners();
-        getSpinner3();
+        getSpinnerTime();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getDataCurrencies();
     }
 
     private void initUI() {
@@ -77,7 +84,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         mChartTo = findViewById(R.id.linechart2);
         spinnerHistoryFrom = findViewById(R.id.spinnerHistoryFrom);
         spinnerHistoryTo = findViewById(R.id.spinnerHistoryTo);
-        spinnerHistory3 = findViewById(R.id.spinnerHistory3);
+        spinnerHistoryTime = findViewById(R.id.spinnerHistory3);
         btnHistory = findViewById(R.id.btnHistory);
 
         mChartFrom.setDragEnabled(true);
@@ -91,7 +98,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         dataSetsTo = new ArrayList<>();
         stringArrayListHistoryFrom = new ArrayList<String>();
         stringArrayListHistoryTo = new ArrayList<String>();
-        stringArrayListHistory3 = new ArrayList<String>();
+        stringArrayListHistoryTime = new ArrayList<String>();
     }
 
     private void initListeners() {
@@ -118,26 +125,26 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                     JSONObject mainObj = new JSONObject(response);
 
                     JSONObject mainObj2 = mainObj.getJSONObject(fromHistory + "_" + toHistory);
-                    dateFrom1 = mainObj2.getDouble(getBeforeEightDateString3(0));
-                    dateFrom2 = mainObj2.getDouble(getBeforeEightDateString3(1));
-                    dateFrom3 = mainObj2.getDouble(getBeforeEightDateString3(2));
-                    dateFrom4 = mainObj2.getDouble(getBeforeEightDateString3(3));
-                    dateFrom5 = mainObj2.getDouble(getBeforeEightDateString3(4));
-                    dateFrom6 = mainObj2.getDouble(getBeforeEightDateString3(5));
-                    dateFrom7 = mainObj2.getDouble(getBeforeEightDateString3(6));
-                    dateFrom8 = mainObj2.getDouble(getBeforeEightDateString3(7));
-                    dateFrom9 = mainObj2.getDouble(getBeforeEightDateString3(8));
+                    dateFrom1 = mainObj2.getDouble(getBeforeEightDateStringMiddle(0));
+                    dateFrom2 = mainObj2.getDouble(getBeforeEightDateStringMiddle(1));
+                    dateFrom3 = mainObj2.getDouble(getBeforeEightDateStringMiddle(2));
+                    dateFrom4 = mainObj2.getDouble(getBeforeEightDateStringMiddle(3));
+                    dateFrom5 = mainObj2.getDouble(getBeforeEightDateStringMiddle(4));
+                    dateFrom6 = mainObj2.getDouble(getBeforeEightDateStringMiddle(5));
+                    dateFrom7 = mainObj2.getDouble(getBeforeEightDateStringMiddle(6));
+                    dateFrom8 = mainObj2.getDouble(getBeforeEightDateStringMiddle(7));
+                    dateFrom9 = mainObj2.getDouble(getBeforeEightDateStringMiddle(8));
 
                     JSONObject mainObj3 = mainObj.getJSONObject(toHistory + "_" + fromHistory);
-                    dateTo1 = mainObj3.getDouble(getBeforeEightDateString3(0));
-                    dateTo2 = mainObj3.getDouble(getBeforeEightDateString3(1));
-                    dateTo3 = mainObj3.getDouble(getBeforeEightDateString3(2));
-                    dateTo4 = mainObj3.getDouble(getBeforeEightDateString3(3));
-                    dateTo5 = mainObj3.getDouble(getBeforeEightDateString3(4));
-                    dateTo6 = mainObj3.getDouble(getBeforeEightDateString3(5));
-                    dateTo7 = mainObj3.getDouble(getBeforeEightDateString3(6));
-                    dateTo8 = mainObj3.getDouble(getBeforeEightDateString3(7));
-                    dateTo9 = mainObj3.getDouble(getBeforeEightDateString3(8));
+                    dateTo1 = mainObj3.getDouble(getBeforeEightDateStringMiddle(0));
+                    dateTo2 = mainObj3.getDouble(getBeforeEightDateStringMiddle(1));
+                    dateTo3 = mainObj3.getDouble(getBeforeEightDateStringMiddle(2));
+                    dateTo4 = mainObj3.getDouble(getBeforeEightDateStringMiddle(3));
+                    dateTo5 = mainObj3.getDouble(getBeforeEightDateStringMiddle(4));
+                    dateTo6 = mainObj3.getDouble(getBeforeEightDateStringMiddle(5));
+                    dateTo7 = mainObj3.getDouble(getBeforeEightDateStringMiddle(6));
+                    dateTo8 = mainObj3.getDouble(getBeforeEightDateStringMiddle(7));
+                    dateTo9 = mainObj3.getDouble(getBeforeEightDateStringMiddle(8));
 
                     yValuesFrom.add(new Entry(0, (float) dateFrom1));
                     yValuesFrom.add(new Entry(1, (float) dateFrom2));
@@ -245,13 +252,9 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
 
                     getCollections(stringArrayListHistoryFrom);
                     getCollections(stringArrayListHistoryTo);
-                    spinnerArrayAdapterHistoryFrom = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistoryFrom);
-                    spinnerArrayAdapterHistoryFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerHistoryFrom.setAdapter(spinnerArrayAdapterHistoryFrom);
 
-                    spinnerArrayAdapterHistoryTo = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistoryTo);
-                    spinnerArrayAdapterHistoryTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerHistoryTo.setAdapter(spinnerArrayAdapterHistoryTo);
+                    getSpinners(stringArrayListHistoryFrom, spinnerHistoryFrom);
+                    getSpinners(stringArrayListHistoryTo, spinnerHistoryTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -275,21 +278,25 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         });
     }
 
-    private void getSpinner3() {
-        stringArrayListHistory3.clear();
+    private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinner.setAdapter(arrayAdapter);
+    }
+
+    private void getSpinnerTime() {
+        stringArrayListHistoryTime.clear();
         for (int i = 0; i < 358; i++) {
             if (i < 10) {
-                stringArrayListHistory3.add(getBeforeEightDateString(i) + "->" + getBeforeEightDateString2(i) + "(" + "00" + i + ")");
+                stringArrayListHistoryTime.add(getBeforeEightDateStringStart(i) + "->" + getBeforeEightDateStringEnd(i) + "(" + "00" + i + ")");
             } else if (i < 100) {
-                stringArrayListHistory3.add(getBeforeEightDateString(i) + "->" + getBeforeEightDateString2(i) + "(" + "0" + i + ")");
+                stringArrayListHistoryTime.add(getBeforeEightDateStringStart(i) + "->" + getBeforeEightDateStringEnd(i) + "(" + "0" + i + ")");
             } else {
-                stringArrayListHistory3.add(getBeforeEightDateString(i) + "->" + getBeforeEightDateString2(i) + "(" + i + ")");
+                stringArrayListHistoryTime.add(getBeforeEightDateStringStart(i) + "->" + getBeforeEightDateStringEnd(i) + "(" + i + ")");
             }
         }
 
-        spinnerArrayAdapterHistory3 = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistory3);
-        spinnerArrayAdapterHistory3.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinnerHistory3.setAdapter(spinnerArrayAdapterHistory3);
+        getSpinners(stringArrayListHistoryTime, spinnerHistoryTime);
     }
 
     private String getItemSpinnerFrom() {
@@ -302,44 +309,37 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         return meHistoryTo;
     }
 
-    private String getItemSpinner3() {
-        String meHistory3 = String.valueOf(spinnerHistory3.getSelectedItem());
-        return meHistory3;
+    private String getItemSpinnerTime() {
+        String meHistoryTime = String.valueOf(spinnerHistoryTime.getSelectedItem());
+        return meHistoryTime;
     }
 
-    private String getBeforeEightDateString(int num) {
+    private String getBeforeEightDateStringStart(int num) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -8 - num);
         return dateFormat.format(cal.getTime());
     }
 
-    private String getBeforeEightDateString2(int num) {
+    private String getBeforeEightDateStringEnd(int num) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -num);
         return dateFormat.format(cal.getTime());
     }
 
-    private String getBeforeEightDateString3(int num) {
+    private String getBeforeEightDateStringMiddle(int num) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -num - Integer.parseInt(getItemSpinner3().substring(23, 26)));
+        cal.add(Calendar.DATE, -num - Integer.parseInt(getItemSpinnerTime().substring(23, 26)));
         return dateFormat.format(cal.getTime());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        getDataCurrencies();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnHistory:
-                getDataHistory(getItemSpinnerFrom().substring(0, 3), getItemSpinnerTo().substring(0, 3), getItemSpinner3().substring(0, 10), getItemSpinner3().substring(12, 22));
+                getDataHistory(getItemSpinnerFrom().substring(0, 3), getItemSpinnerTo().substring(0, 3), getItemSpinnerTime().substring(0, 10), getItemSpinnerTime().substring(12, 22));
                 break;
         }
     }

@@ -26,7 +26,6 @@ import eliorcohen.com.exchangeapp.R;
 
 public class Conversion extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayAdapter<String> spinnerArrayAdapterExchFrom, spinnerArrayAdapterExchTo;
     private ArrayList<String> stringArrayListExchFrom, stringArrayListExchTo;
     private Spinner spinnerExchFrom, spinnerExchTo;
     private ImageView myBtnConversion;
@@ -44,6 +43,13 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
 
         initUI();
         initListeners();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getDataCurrencies();
     }
 
     private void initUI() {
@@ -91,13 +97,9 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
 
                     getCollections(stringArrayListExchFrom);
                     getCollections(stringArrayListExchTo);
-                    spinnerArrayAdapterExchFrom = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExchFrom);
-                    spinnerArrayAdapterExchFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerExchFrom.setAdapter(spinnerArrayAdapterExchFrom);
 
-                    spinnerArrayAdapterExchTo = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExchTo);
-                    spinnerArrayAdapterExchTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerExchTo.setAdapter(spinnerArrayAdapterExchTo);
+                    getSpinners(stringArrayListExchFrom, spinnerExchFrom);
+                    getSpinners(stringArrayListExchTo, spinnerExchTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -145,6 +147,12 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         });
     }
 
+    private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinner.setAdapter(arrayAdapter);
+    }
+
     private String getItemSpinnerFrom() {
         String meExchFrom = String.valueOf(spinnerExchFrom.getSelectedItem());
         return meExchFrom;
@@ -153,13 +161,6 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     private String getItemSpinnerTo() {
         String meExchTo = String.valueOf(spinnerExchTo.getSelectedItem());
         return meExchTo;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        getDataCurrencies();
     }
 
     @Override
