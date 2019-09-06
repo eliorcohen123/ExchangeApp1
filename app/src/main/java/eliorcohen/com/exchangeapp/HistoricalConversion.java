@@ -29,56 +29,54 @@ import java.util.Iterator;
 
 public class HistoricalConversion extends AppCompatActivity implements View.OnClickListener {
 
-    private LineChart mChart1, mChart2;
-    private ArrayList<Entry> yValues1, yValues2;
-    private ArrayList<ILineDataSet> dataSets1, dataSets2;
-    private double date1, date2, date3, date4, date5, date6, date7, date8, date9,
-            date11, date22, date33, date44, date55, date66, date77, date88, date99;
-    private LineDataSet set1, set2;
-    private LineData lineData1, lineData2;
-    private ArrayAdapter<String> spinnerArrayAdapterHistory1, spinnerArrayAdapterHistory2, spinnerArrayAdapterHistory3;
-    private ArrayList<String> stringArrayListHistory1, stringArrayListHistory2, stringArrayListHistory3;
-    private Spinner spinnerHistory1, spinnerHistory2, spinnerHistory3;
+    private LineChart mChartFrom, mChartTo;
+    private ArrayList<Entry> yValuesFrom, yValuesTo;
+    private ArrayList<ILineDataSet> dataSetsFrom, dataSetsTo;
+    private double dateFrom1, dateFrom2, dateFrom3, dateFrom4, dateFrom5, dateFrom6, dateFrom7, dateFrom8, dateFrom9,
+            dateTo1, dateTo2, dateTo3, dateTo4, dateTo5, dateTo6, dateTo7, dateTo8, dateTo9;
+    private LineDataSet setFrom, setTo;
+    private LineData lineDataFrom, lineDataTo;
+    private ArrayAdapter<String> spinnerArrayAdapterHistoryFrom, spinnerArrayAdapterHistoryTo;
+    private ArrayList<String> stringArrayListHistoryFrom, stringArrayListHistoryTo;
+    private Spinner spinnerHistoryFrom, spinnerHistoryTo;
     private Button btnHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_historical);
+        setContentView(R.layout.activity_history);
 
         initUI();
         initListeners();
-        getData(getItemSpinner1(), getItemSpinner2());
-        getData2();
+        getDataHistory(getItemSpinnerFrom(), getItemSpinnerTo());
+        getDataCurrencies();
     }
 
     private void initUI() {
-        mChart1 = findViewById(R.id.linechart1);
-        mChart2 = findViewById(R.id.linechart2);
-        spinnerHistory1 = findViewById(R.id.spinnerHistory1);
-        spinnerHistory2 = findViewById(R.id.spinnerHistory2);
-        spinnerHistory3 = findViewById(R.id.spinnerHistory3);
+        mChartFrom = findViewById(R.id.linechart1);
+        mChartTo = findViewById(R.id.linechart2);
+        spinnerHistoryFrom = findViewById(R.id.spinnerHistory1);
+        spinnerHistoryTo = findViewById(R.id.spinnerHistory2);
         btnHistory = findViewById(R.id.btnHistory);
 
-        mChart1.setDragEnabled(true);
-        mChart1.setScaleEnabled(true);
-        mChart2.setDragEnabled(true);
-        mChart2.setScaleEnabled(true);
+        mChartFrom.setDragEnabled(true);
+        mChartFrom.setScaleEnabled(true);
+        mChartTo.setDragEnabled(true);
+        mChartTo.setScaleEnabled(true);
 
-        yValues1 = new ArrayList<>();
-        yValues2 = new ArrayList<>();
-        dataSets1 = new ArrayList<>();
-        dataSets2 = new ArrayList<>();
-        stringArrayListHistory1 = new ArrayList<String>();
-        stringArrayListHistory2 = new ArrayList<String>();
-        stringArrayListHistory3 = new ArrayList<String>();
+        yValuesFrom = new ArrayList<>();
+        yValuesTo = new ArrayList<>();
+        dataSetsFrom = new ArrayList<>();
+        dataSetsTo = new ArrayList<>();
+        stringArrayListHistoryFrom = new ArrayList<String>();
+        stringArrayListHistoryTo = new ArrayList<String>();
     }
 
     private void initListeners() {
         btnHistory.setOnClickListener(this);
     }
 
-    private void getData(final String fromHistory, final String toHistory) {
+    private void getDataHistory(final String fromHistory, final String toHistory) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/convert?apiKey="
                 + getString(R.string.api_key) +
                 "&q=" + fromHistory + "_" + toHistory + "," + toHistory + "_" + fromHistory + "&compact=ultra&date="
@@ -87,84 +85,84 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
             @Override
             public void onResponse(String response) {
                 try {
-                    yValues1.clear();
-                    yValues2.clear();
-                    dataSets1.clear();
-                    dataSets2.clear();
-                    mChart1.invalidate();
-                    mChart2.invalidate();
-                    mChart1.clear();
-                    mChart2.clear();
+                    yValuesFrom.clear();
+                    yValuesTo.clear();
+                    dataSetsFrom.clear();
+                    dataSetsTo.clear();
+                    mChartFrom.invalidate();
+                    mChartTo.invalidate();
+                    mChartFrom.clear();
+                    mChartTo.clear();
 
                     JSONObject mainObj = new JSONObject(response);
 
                     JSONObject mainObj2 = mainObj.getJSONObject(fromHistory + "_" + toHistory);
-                    date1 = mainObj2.getDouble(getBeforeEightDateString(0));
-                    date2 = mainObj2.getDouble(getBeforeEightDateString(1));
-                    date3 = mainObj2.getDouble(getBeforeEightDateString(2));
-                    date4 = mainObj2.getDouble(getBeforeEightDateString(3));
-                    date5 = mainObj2.getDouble(getBeforeEightDateString(4));
-                    date6 = mainObj2.getDouble(getBeforeEightDateString(5));
-                    date7 = mainObj2.getDouble(getBeforeEightDateString(6));
-                    date8 = mainObj2.getDouble(getBeforeEightDateString(7));
-                    date9 = mainObj2.getDouble(getBeforeEightDateString(8));
+                    dateFrom1 = mainObj2.getDouble(getBeforeEightDateString(0));
+                    dateFrom2 = mainObj2.getDouble(getBeforeEightDateString(1));
+                    dateFrom3 = mainObj2.getDouble(getBeforeEightDateString(2));
+                    dateFrom4 = mainObj2.getDouble(getBeforeEightDateString(3));
+                    dateFrom5 = mainObj2.getDouble(getBeforeEightDateString(4));
+                    dateFrom6 = mainObj2.getDouble(getBeforeEightDateString(5));
+                    dateFrom7 = mainObj2.getDouble(getBeforeEightDateString(6));
+                    dateFrom8 = mainObj2.getDouble(getBeforeEightDateString(7));
+                    dateFrom9 = mainObj2.getDouble(getBeforeEightDateString(8));
 
                     JSONObject mainObj3 = mainObj.getJSONObject(toHistory + "_" + fromHistory);
-                    date11 = mainObj3.getDouble(getBeforeEightDateString(0));
-                    date22 = mainObj3.getDouble(getBeforeEightDateString(1));
-                    date33 = mainObj3.getDouble(getBeforeEightDateString(2));
-                    date44 = mainObj3.getDouble(getBeforeEightDateString(3));
-                    date55 = mainObj3.getDouble(getBeforeEightDateString(4));
-                    date66 = mainObj3.getDouble(getBeforeEightDateString(5));
-                    date77 = mainObj3.getDouble(getBeforeEightDateString(6));
-                    date88 = mainObj3.getDouble(getBeforeEightDateString(7));
-                    date99 = mainObj3.getDouble(getBeforeEightDateString(8));
+                    dateTo1 = mainObj3.getDouble(getBeforeEightDateString(0));
+                    dateTo2 = mainObj3.getDouble(getBeforeEightDateString(1));
+                    dateTo3 = mainObj3.getDouble(getBeforeEightDateString(2));
+                    dateTo4 = mainObj3.getDouble(getBeforeEightDateString(3));
+                    dateTo5 = mainObj3.getDouble(getBeforeEightDateString(4));
+                    dateTo6 = mainObj3.getDouble(getBeforeEightDateString(5));
+                    dateTo7 = mainObj3.getDouble(getBeforeEightDateString(6));
+                    dateTo8 = mainObj3.getDouble(getBeforeEightDateString(7));
+                    dateTo9 = mainObj3.getDouble(getBeforeEightDateString(8));
 
-                    yValues1.add(new Entry(0, (float) date1));
-                    yValues1.add(new Entry(1, (float) date2));
-                    yValues1.add(new Entry(2, (float) date3));
-                    yValues1.add(new Entry(3, (float) date4));
-                    yValues1.add(new Entry(4, (float) date5));
-                    yValues1.add(new Entry(5, (float) date6));
-                    yValues1.add(new Entry(6, (float) date7));
-                    yValues1.add(new Entry(7, (float) date8));
-                    yValues1.add(new Entry(8, (float) date9));
+                    yValuesFrom.add(new Entry(0, (float) dateFrom1));
+                    yValuesFrom.add(new Entry(1, (float) dateFrom2));
+                    yValuesFrom.add(new Entry(2, (float) dateFrom3));
+                    yValuesFrom.add(new Entry(3, (float) dateFrom4));
+                    yValuesFrom.add(new Entry(4, (float) dateFrom5));
+                    yValuesFrom.add(new Entry(5, (float) dateFrom6));
+                    yValuesFrom.add(new Entry(6, (float) dateFrom7));
+                    yValuesFrom.add(new Entry(7, (float) dateFrom8));
+                    yValuesFrom.add(new Entry(8, (float) dateFrom9));
 
-                    yValues2.add(new Entry(0, (float) date11));
-                    yValues2.add(new Entry(1, (float) date22));
-                    yValues2.add(new Entry(2, (float) date33));
-                    yValues2.add(new Entry(3, (float) date44));
-                    yValues2.add(new Entry(4, (float) date55));
-                    yValues2.add(new Entry(5, (float) date66));
-                    yValues2.add(new Entry(6, (float) date77));
-                    yValues2.add(new Entry(7, (float) date88));
-                    yValues2.add(new Entry(8, (float) date99));
+                    yValuesTo.add(new Entry(0, (float) dateTo1));
+                    yValuesTo.add(new Entry(1, (float) dateTo2));
+                    yValuesTo.add(new Entry(2, (float) dateTo3));
+                    yValuesTo.add(new Entry(3, (float) dateTo4));
+                    yValuesTo.add(new Entry(4, (float) dateTo5));
+                    yValuesTo.add(new Entry(5, (float) dateTo6));
+                    yValuesTo.add(new Entry(6, (float) dateTo7));
+                    yValuesTo.add(new Entry(7, (float) dateTo8));
+                    yValuesTo.add(new Entry(8, (float) dateTo9));
 
                     int selectedColor = Color.rgb(0, 204, 0);
 
-                    set1 = new LineDataSet(yValues1, "Exchange set " + fromHistory + " to " + toHistory);
-                    set1.setFillAlpha(110);
-                    set1.setLineWidth(3f);
-                    set1.setValueTextSize(10f);
-                    set1.setColor(Color.RED);
-                    set1.setValueTextColor(selectedColor);
-                    set1.setCircleColorHole(Color.CYAN);
+                    setFrom = new LineDataSet(yValuesFrom, "Exchange set " + fromHistory + " to " + toHistory);
+                    setFrom.setFillAlpha(110);
+                    setFrom.setLineWidth(3f);
+                    setFrom.setValueTextSize(10f);
+                    setFrom.setColor(Color.RED);
+                    setFrom.setValueTextColor(selectedColor);
+                    setFrom.setCircleColorHole(Color.CYAN);
 
-                    set2 = new LineDataSet(yValues2, "Exchange set " + toHistory + " to " + fromHistory);
-                    set2.setFillAlpha(110);
-                    set2.setLineWidth(3f);
-                    set2.setValueTextSize(10f);
-                    set2.setColor(Color.BLUE);
-                    set2.setValueTextColor(selectedColor);
-                    set2.setCircleColorHole(Color.CYAN);
+                    setTo = new LineDataSet(yValuesTo, "Exchange set " + toHistory + " to " + fromHistory);
+                    setTo.setFillAlpha(110);
+                    setTo.setLineWidth(3f);
+                    setTo.setValueTextSize(10f);
+                    setTo.setColor(Color.BLUE);
+                    setTo.setValueTextColor(selectedColor);
+                    setTo.setCircleColorHole(Color.CYAN);
 
-                    dataSets1.add(set1);
-                    lineData1 = new LineData(dataSets1);
-                    mChart1.setData(lineData1);
+                    dataSetsFrom.add(setFrom);
+                    lineDataFrom = new LineData(dataSetsFrom);
+                    mChartFrom.setData(lineDataFrom);
 
-                    dataSets2.add(set2);
-                    lineData2 = new LineData(dataSets2);
-                    mChart2.setData(lineData2);
+                    dataSetsTo.add(setTo);
+                    lineDataTo = new LineData(dataSetsTo);
+                    mChartTo.setData(lineDataTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -179,29 +177,31 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         requestQueue.add(stringRequest);
     }
 
-    private void getData2() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey=" + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
+    private void getDataCurrencies() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
+                + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj = new JSONObject(response);
                     JSONObject mainObj2 = mainObj.getJSONObject("results");
+
                     Iterator<String> keys = mainObj2.keys();
                     while (keys.hasNext()) {
                         String key = keys.next();
                         if (mainObj2.get(key) instanceof JSONObject) {
-//                            String valueStr = mainObj2.getString(key);
-                            stringArrayListHistory1.add(key);
-                            stringArrayListHistory2.add(key);
+                            stringArrayListHistoryFrom.add(key);
+                            stringArrayListHistoryTo.add(key);
                         }
                     }
-                    spinnerArrayAdapterHistory1 = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistory1);
-                    spinnerArrayAdapterHistory1.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerHistory1.setAdapter(spinnerArrayAdapterHistory1);
 
-                    spinnerArrayAdapterHistory2 = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistory2);
-                    spinnerArrayAdapterHistory2.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerHistory2.setAdapter(spinnerArrayAdapterHistory2);
+                    spinnerArrayAdapterHistoryFrom = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistoryFrom);
+                    spinnerArrayAdapterHistoryFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+                    spinnerHistoryFrom.setAdapter(spinnerArrayAdapterHistoryFrom);
+
+                    spinnerArrayAdapterHistoryTo = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistoryTo);
+                    spinnerArrayAdapterHistoryTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+                    spinnerHistoryTo.setAdapter(spinnerArrayAdapterHistoryTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -216,19 +216,14 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         requestQueue.add(stringRequest);
     }
 
-    private String getItemSpinner1() {
-        String meExch = String.valueOf(spinnerHistory1.getSelectedItem());
-        return meExch;
+    private String getItemSpinnerFrom() {
+        String meHistoryFrom = String.valueOf(spinnerHistoryFrom.getSelectedItem());
+        return meHistoryFrom;
     }
 
-    private String getItemSpinner2() {
-        String meExch = String.valueOf(spinnerHistory2.getSelectedItem());
-        return meExch;
-    }
-
-    private String getItemSpinner3() {
-        String meExch = String.valueOf(spinnerHistory3.getSelectedItem());
-        return meExch;
+    private String getItemSpinnerTo() {
+        String meHistoryTo = String.valueOf(spinnerHistoryTo.getSelectedItem());
+        return meHistoryTo;
     }
 
     private String getBeforeEightDateString(int num) {
@@ -242,8 +237,8 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnHistory:
-                getData(getItemSpinner1(), getItemSpinner2());
-                getData2();
+                getDataHistory(getItemSpinnerFrom(), getItemSpinnerTo());
+                getDataCurrencies();
                 break;
         }
     }

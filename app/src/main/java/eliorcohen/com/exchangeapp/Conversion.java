@@ -22,9 +22,9 @@ import java.util.Iterator;
 
 public class Conversion extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayAdapter<String> spinnerArrayAdapterExch1, spinnerArrayAdapterExch2;
-    private ArrayList<String> stringArrayListExch1, stringArrayListExch2;
-    private Spinner spinnerExch1, spinnerExch2;
+    private ArrayAdapter<String> spinnerArrayAdapterExchFrom, spinnerArrayAdapterExchTo;
+    private ArrayList<String> stringArrayListExchFrom, stringArrayListExchTo;
+    private Spinner spinnerExchFrom, spinnerExchTo;
     private Button myBtnConversion;
     private TextView myTextConversion;
 
@@ -38,47 +38,48 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
 
         initUI();
         initListeners();
-        getData();
-        getData2(getItemSpinner1(), getItemSpinner2());
+        getDataCurrencies();
+        getDataCurrconv(getItemSpinnerFrom(), getItemSpinnerTo());
     }
 
     private void initUI() {
-        spinnerExch1 = findViewById(R.id.spinnerExch1);
-        spinnerExch2 = findViewById(R.id.spinnerExch2);
+        spinnerExchFrom = findViewById(R.id.spinnerExchFrom);
+        spinnerExchTo = findViewById(R.id.spinnerExchTo);
         myBtnConversion = findViewById(R.id.myBtnConversion);
         myTextConversion = findViewById(R.id.myTextConversion);
 
-        stringArrayListExch1 = new ArrayList<String>();
-        stringArrayListExch2 = new ArrayList<String>();
+        stringArrayListExchFrom = new ArrayList<String>();
+        stringArrayListExchTo = new ArrayList<String>();
     }
 
     private void initListeners() {
         myBtnConversion.setOnClickListener(this);
     }
 
-    private void getData() {
+    private void getDataCurrencies() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey=" + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj = new JSONObject(response);
-                    JSONObject mainObj2 = mainObj.getJSONObject("results");
-                    Iterator<String> keys = mainObj2.keys();
+                    JSONObject results = mainObj.getJSONObject("results");
+
+                    Iterator<String> keys = results.keys();
                     while (keys.hasNext()) {
                         String key = keys.next();
-                        if (mainObj2.get(key) instanceof JSONObject) {
-//                            String valueStr = mainObj2.getString(key);
-                            stringArrayListExch1.add(key);
-                            stringArrayListExch2.add(key);
+                        if (results.get(key) instanceof JSONObject) {
+                            stringArrayListExchFrom.add(key);
+                            stringArrayListExchTo.add(key);
                         }
                     }
-                    spinnerArrayAdapterExch1 = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExch1);
-                    spinnerArrayAdapterExch1.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerExch1.setAdapter(spinnerArrayAdapterExch1);
 
-                    spinnerArrayAdapterExch2 = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExch2);
-                    spinnerArrayAdapterExch2.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-                    spinnerExch2.setAdapter(spinnerArrayAdapterExch2);
+                    spinnerArrayAdapterExchFrom = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExchFrom);
+                    spinnerArrayAdapterExchFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+                    spinnerExchFrom.setAdapter(spinnerArrayAdapterExchFrom);
+
+                    spinnerArrayAdapterExchTo = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExchTo);
+                    spinnerArrayAdapterExchTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+                    spinnerExchTo.setAdapter(spinnerArrayAdapterExchTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -93,7 +94,7 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         requestQueue.add(stringRequest);
     }
 
-    private void getData2(final String fromExch, final String toExch) {
+    private void getDataCurrconv(final String fromExch, final String toExch) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/convert?q="
                 + fromExch + "_" + toExch +
                 "&compact=ultra&apiKey=" + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
@@ -101,8 +102,8 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj = new JSONObject(response);
-                    double mainObj2 = mainObj.getDouble(fromExch + "_" + toExch);
-                    myTextConversion.setText(String.valueOf(mainObj2));
+                    double nameConvert = mainObj.getDouble(fromExch + "_" + toExch);
+                    myTextConversion.setText(String.valueOf(nameConvert));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -117,22 +118,22 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         requestQueue.add(stringRequest);
     }
 
-    private String getItemSpinner1() {
-        String meExch = String.valueOf(spinnerExch1.getSelectedItem());
-        return meExch;
+    private String getItemSpinnerFrom() {
+        String meExchFrom = String.valueOf(spinnerExchFrom.getSelectedItem());
+        return meExchFrom;
     }
 
-    private String getItemSpinner2() {
-        String meExch = String.valueOf(spinnerExch2.getSelectedItem());
-        return meExch;
+    private String getItemSpinnerTo() {
+        String meExchTo = String.valueOf(spinnerExchTo.getSelectedItem());
+        return meExchTo;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.myBtnConversion:
-                getData();
-                getData2(getItemSpinner1(), getItemSpinner2());
+                getDataCurrencies();
+                getDataCurrconv(getItemSpinnerFrom(), getItemSpinnerTo());
                 break;
         }
     }
