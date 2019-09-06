@@ -89,18 +89,8 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
                         }
                     }
 
-                    Collections.sort(stringArrayListExchFrom, new Comparator<String>() {
-                        @Override
-                        public int compare(String s1, String s2) {
-                            return s1.compareToIgnoreCase(s2);
-                        }
-                    });
-                    Collections.sort(stringArrayListExchTo, new Comparator<String>() {
-                        @Override
-                        public int compare(String s1, String s2) {
-                            return s1.compareToIgnoreCase(s2);
-                        }
-                    });
+                    getCollections(stringArrayListExchFrom);
+                    getCollections(stringArrayListExchTo);
                     spinnerArrayAdapterExchFrom = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExchFrom);
                     spinnerArrayAdapterExchFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
                     spinnerExchFrom.setAdapter(spinnerArrayAdapterExchFrom);
@@ -144,6 +134,15 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    private void getCollections(ArrayList<String> arrayList) {
+        Collections.sort(arrayList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
     }
 
     private String getItemSpinnerFrom() {

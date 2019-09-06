@@ -243,18 +243,8 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                         }
                     }
 
-                    Collections.sort(stringArrayListHistoryFrom, new Comparator<String>() {
-                        @Override
-                        public int compare(String s1, String s2) {
-                            return s1.compareToIgnoreCase(s2);
-                        }
-                    });
-                    Collections.sort(stringArrayListHistoryTo, new Comparator<String>() {
-                        @Override
-                        public int compare(String s1, String s2) {
-                            return s1.compareToIgnoreCase(s2);
-                        }
-                    });
+                    getCollections(stringArrayListHistoryFrom);
+                    getCollections(stringArrayListHistoryTo);
                     spinnerArrayAdapterHistoryFrom = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistoryFrom);
                     spinnerArrayAdapterHistoryFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
                     spinnerHistoryFrom.setAdapter(spinnerArrayAdapterHistoryFrom);
@@ -274,6 +264,15 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    private void getCollections(ArrayList<String> arrayList) {
+        Collections.sort(arrayList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
     }
 
     private void getSpinner3() {
