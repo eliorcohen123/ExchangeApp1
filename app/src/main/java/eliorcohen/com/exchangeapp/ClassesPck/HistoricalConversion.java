@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp;
+package eliorcohen.com.exchangeapp.ClassesPck;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,7 +29,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+
+import eliorcohen.com.exchangeapp.R;
 
 public class HistoricalConversion extends AppCompatActivity implements View.OnClickListener {
 
@@ -239,6 +243,18 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                         }
                     }
 
+                    Collections.sort(stringArrayListHistoryFrom, new Comparator<String>() {
+                        @Override
+                        public int compare(String s1, String s2) {
+                            return s1.compareToIgnoreCase(s2);
+                        }
+                    });
+                    Collections.sort(stringArrayListHistoryTo, new Comparator<String>() {
+                        @Override
+                        public int compare(String s1, String s2) {
+                            return s1.compareToIgnoreCase(s2);
+                        }
+                    });
                     spinnerArrayAdapterHistoryFrom = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, stringArrayListHistoryFrom);
                     spinnerArrayAdapterHistoryFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
                     spinnerHistoryFrom.setAdapter(spinnerArrayAdapterHistoryFrom);

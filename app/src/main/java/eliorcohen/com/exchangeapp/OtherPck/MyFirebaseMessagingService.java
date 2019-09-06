@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp;
+package eliorcohen.com.exchangeapp.OtherPck;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -13,6 +13,9 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import eliorcohen.com.exchangeapp.ClassesPck.MainActivity;
+import eliorcohen.com.exchangeapp.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 

@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Conversion">
+    tools:context=".ClassesPck.Conversion">
 
     <TextView
         android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp;
+package eliorcohen.com.exchangeapp.ClassesPck;
 
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +18,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+
+import eliorcohen.com.exchangeapp.R;
 
 public class Conversion extends AppCompatActivity implements View.OnClickListener {
 
@@ -85,6 +89,18 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
                         }
                     }
 
+                    Collections.sort(stringArrayListExchFrom, new Comparator<String>() {
+                        @Override
+                        public int compare(String s1, String s2) {
+                            return s1.compareToIgnoreCase(s2);
+                        }
+                    });
+                    Collections.sort(stringArrayListExchTo, new Comparator<String>() {
+                        @Override
+                        public int compare(String s1, String s2) {
+                            return s1.compareToIgnoreCase(s2);
+                        }
+                    });
                     spinnerArrayAdapterExchFrom = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, stringArrayListExchFrom);
                     spinnerArrayAdapterExchFrom.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
                     spinnerExchFrom.setAdapter(spinnerArrayAdapterExchFrom);
