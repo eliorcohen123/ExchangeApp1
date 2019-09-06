@@ -14,6 +14,16 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/btnHistory"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:background="@color/colorPrimary"
+            android:text="Convert"
+            android:textColor="@color/colorYellowDark" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,22 +44,11 @@
                 android:id="@+id/spinnerHistoryFrom"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:ellipsize="marquee"
                 android:popupBackground="@color/colorPrimary"
                 android:theme="@style/spinnerTheme" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnHistory"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:background="@color/colorPrimary"
-            android:text="Convert"
-            android:textColor="@color/colorYellowDark" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -71,7 +70,33 @@
                 android:id="@+id/spinnerHistoryTo"
                 style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:ellipsize="marquee"
+                android:popupBackground="@color/colorPrimary"
+                android:theme="@style/spinnerTheme" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="History:"
+                android:textColor="@color/colorYellow"
+                android:textSize="17sp" />
+
+            <Spinner
+                android:id="@+id/spinnerHistory3"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:ellipsize="marquee"
                 android:popupBackground="@color/colorPrimary"
                 android:theme="@style/spinnerTheme" />
