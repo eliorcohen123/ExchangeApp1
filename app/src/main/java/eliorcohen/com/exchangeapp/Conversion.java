@@ -31,6 +31,11 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            this.getSupportActionBar().hide();
+        } catch (NullPointerException e) {
+
+        }
         setContentView(R.layout.activity_conversion);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -38,8 +43,6 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
 
         initUI();
         initListeners();
-        getDataCurrencies();
-        getDataCurrconv(getItemSpinnerFrom(), getItemSpinnerTo());
     }
 
     private void initUI() {
@@ -130,10 +133,16 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        getDataCurrencies();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.myBtnConversion:
-                getDataCurrencies();
                 getDataCurrconv(getItemSpinnerFrom(), getItemSpinnerTo());
                 break;
         }

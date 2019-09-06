@@ -9,8 +9,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stock Exchange!"
-        android:textColor="@color/colorYellow"
+        android:gravity="center"
+        android:text="@string/title_app"
+        android:textColor="@color/colorGreenBlack"
         android:textSize="40sp" />
 
     <Button
@@ -20,7 +21,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
         android:background="@color/colorPrimary"
-        android:text="Conversion"
+        android:text="@string/btn_conversion"
         android:textColor="@color/colorYellowDark" />
 
     <Button
@@ -28,8 +29,8 @@
         android:layout_width="170dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
-        android:text="History Conversion"
+        android:text="@string/btn_history_conversion"
         android:textColor="@color/colorYellowDark" />
 </LinearLayout>

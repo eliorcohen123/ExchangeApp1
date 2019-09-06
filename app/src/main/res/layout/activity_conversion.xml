@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Conversion"
-        android:textColor="@color/colorYellowDark"
+        android:text="@string/title_conversion"
+        android:textColor="@color/colorGreenBlack"
         android:textSize="50sp" />
 
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="From:"
+                android:text="@string/from"
                 android:textColor="@color/colorYellow"
                 android:textSize="17sp" />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="To:"
+                android:text="@string/to"
                 android:textColor="@color/colorYellow"
                 android:textSize="17sp" />
 
@@ -95,6 +95,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@color/colorPrimary"
-        android:text="Convert"
+        android:text="@string/convert"
         android:textColor="@color/colorYellow" />
 </LinearLayout>

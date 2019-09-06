@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -15,6 +16,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -37,22 +41,31 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     private ArrayList<ILineDataSet> dataSetsFrom, dataSetsTo;
     private double dateFrom1, dateFrom2, dateFrom3, dateFrom4, dateFrom5, dateFrom6, dateFrom7, dateFrom8, dateFrom9,
             dateTo1, dateTo2, dateTo3, dateTo4, dateTo5, dateTo6, dateTo7, dateTo8, dateTo9;
+    private YAxis yAxisRightFrom, yAxisRightTo;
+    private YAxis yAxisLeftFrom, yAxisLeftTo;
+    private XAxis xAxisFrom, xAxisTo;
+    private Legend legendFrom, legendTo;
     private LineDataSet setFrom, setTo;
     private LineData lineDataFrom, lineDataTo;
     private ArrayAdapter<String> spinnerArrayAdapterHistoryFrom, spinnerArrayAdapterHistoryTo, spinnerArrayAdapterHistory3;
     private ArrayList<String> stringArrayListHistoryFrom, stringArrayListHistoryTo, stringArrayListHistory3;
     private Spinner spinnerHistoryFrom, spinnerHistoryTo, spinnerHistory3;
-    private Button btnHistory;
+    private ImageView btnHistory;
+    private int selectedColorText, selectedColorSeparate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            this.getSupportActionBar().hide();
+        } catch (NullPointerException e) {
+
+        }
         setContentView(R.layout.activity_history);
 
         initUI();
         initListeners();
         getSpinner3();
-        getDataCurrencies();
     }
 
     private void initUI() {
@@ -89,16 +102,15 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                 "&endDate=" + spinnerTo, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                yValuesFrom.clear();
+                yValuesTo.clear();
+                dataSetsFrom.clear();
+                dataSetsTo.clear();
+                mChartFrom.invalidate();
+                mChartTo.invalidate();
+                mChartFrom.clear();
+                mChartTo.clear();
                 try {
-                    yValuesFrom.clear();
-                    yValuesTo.clear();
-                    dataSetsFrom.clear();
-                    dataSetsTo.clear();
-                    mChartFrom.invalidate();
-                    mChartTo.invalidate();
-                    mChartFrom.clear();
-                    mChartTo.clear();
-
                     JSONObject mainObj = new JSONObject(response);
 
                     JSONObject mainObj2 = mainObj.getJSONObject(fromHistory + "_" + toHistory);
@@ -143,14 +155,33 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                     yValuesTo.add(new Entry(7, (float) dateTo8));
                     yValuesTo.add(new Entry(8, (float) dateTo9));
 
-                    int selectedColor = Color.rgb(0, 204, 0);
+                    selectedColorText = Color.rgb(0, 204, 0);
+                    selectedColorSeparate = Color.rgb(255, 255, 255);
+
+                    yAxisRightFrom = mChartFrom.getAxisRight();
+                    yAxisLeftFrom = mChartFrom.getAxisLeft();
+                    xAxisFrom = mChartFrom.getXAxis();
+                    legendFrom = mChartFrom.getLegend();
+                    yAxisRightTo = mChartTo.getAxisRight();
+                    yAxisLeftTo = mChartTo.getAxisLeft();
+                    xAxisTo = mChartTo.getXAxis();
+                    legendTo = mChartTo.getLegend();
+
+                    yAxisRightFrom.setTextColor(selectedColorSeparate);
+                    yAxisLeftFrom.setTextColor(selectedColorSeparate);
+                    xAxisFrom.setTextColor(selectedColorSeparate);
+                    legendFrom.setTextColor(selectedColorSeparate);
+                    yAxisRightTo.setTextColor(selectedColorSeparate);
+                    yAxisLeftTo.setTextColor(selectedColorSeparate);
+                    xAxisTo.setTextColor(selectedColorSeparate);
+                    legendTo.setTextColor(selectedColorSeparate);
 
                     setFrom = new LineDataSet(yValuesFrom, "Exchange set " + fromHistory + " to " + toHistory);
                     setFrom.setFillAlpha(110);
                     setFrom.setLineWidth(3f);
                     setFrom.setValueTextSize(10f);
                     setFrom.setColor(Color.RED);
-                    setFrom.setValueTextColor(selectedColor);
+                    setFrom.setValueTextColor(selectedColorText);
                     setFrom.setCircleColorHole(Color.CYAN);
 
                     setTo = new LineDataSet(yValuesTo, "Exchange set " + toHistory + " to " + fromHistory);
@@ -158,7 +189,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                     setTo.setLineWidth(3f);
                     setTo.setValueTextSize(10f);
                     setTo.setColor(Color.BLUE);
-                    setTo.setValueTextColor(selectedColor);
+                    setTo.setValueTextColor(selectedColorText);
                     setTo.setCircleColorHole(Color.CYAN);
 
                     dataSetsFrom.add(setFrom);
@@ -275,11 +306,17 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        getDataCurrencies();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnHistory:
                 getDataHistory(getItemSpinnerFrom(), getItemSpinnerTo(), getItemSpinner3().substring(0, 10), getItemSpinner3().substring(12, 22));
-                getDataCurrencies();
                 break;
         }
     }

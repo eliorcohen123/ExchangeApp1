@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">Exchange App</string>
+    <string name="app_name">Stock Exchange World</string>
     <string name="api_key">API_KEY</string>
+    <string name="title_app">Stock Exchange \n World!</string>
+    <string name="btn_conversion">Conversion</string>
+    <string name="btn_history_conversion">History Conversion</string>
+    <string name="title_conversion">Conversion</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="convert">Convert</string>
+    <string name="history">History:</string>
 </resources>
