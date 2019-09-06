@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,14 +38,14 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         }
         setContentView(R.layout.activity_conversion);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         initUI();
         initListeners();
     }
 
     private void initUI() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         spinnerExchFrom = findViewById(R.id.spinnerExchFrom);
         spinnerExchTo = findViewById(R.id.spinnerExchTo);
         myBtnConversion = findViewById(R.id.myBtnConversion);
@@ -62,7 +61,7 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
 
     private void getDataCurrencies() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
-                + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
+                + getString(R.string.api_key2), new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -73,8 +72,16 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
                     while (keys.hasNext()) {
                         String key = keys.next();
                         if (results.get(key) instanceof JSONObject) {
-                            stringArrayListExchFrom.add(key);
-                            stringArrayListExchTo.add(key);
+                            String valueCurrencySymbol = results.getString(key);
+                            JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
+                            if (mainObjKey.has("currencySymbol")) {
+                                String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
+                                stringArrayListExchFrom.add(key + "=" + valueCurrencySymbolGet);
+                                stringArrayListExchTo.add(key + "=" + valueCurrencySymbolGet);
+                            } else {
+                                stringArrayListExchFrom.add(key);
+                                stringArrayListExchTo.add(key);
+                            }
                         }
                     }
 
@@ -102,7 +109,7 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     private void getDataCurrconv(final String fromExch, final String toExch) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/convert?q="
                 + fromExch + "_" + toExch +
-                "&compact=ultra&apiKey=" + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
+                "&compact=ultra&apiKey=" + getString(R.string.api_key1), new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -144,7 +151,7 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.myBtnConversion:
-                getDataCurrconv(getItemSpinnerFrom(), getItemSpinnerTo());
+                getDataCurrconv(getItemSpinnerFrom().substring(0, 3), getItemSpinnerTo().substring(0, 3));
                 break;
         }
     }

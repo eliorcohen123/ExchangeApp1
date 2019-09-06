@@ -2,13 +2,12 @@ package eliorcohen.com.exchangeapp;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,11 +26,9 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 
 public class HistoricalConversion extends AppCompatActivity implements View.OnClickListener {
@@ -69,6 +66,9 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     }
 
     private void initUI() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         mChartFrom = findViewById(R.id.linechart1);
         mChartTo = findViewById(R.id.linechart2);
         spinnerHistoryFrom = findViewById(R.id.spinnerHistoryFrom);
@@ -96,7 +96,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
 
     private void getDataHistory(final String fromHistory, final String toHistory, String spinnerFrom, String spinnerTo) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/convert?apiKey="
-                + getString(R.string.api_key) +
+                + getString(R.string.api_key1) +
                 "&q=" + fromHistory + "_" + toHistory + "," + toHistory + "_" + fromHistory + "&compact=ultra&date="
                 + spinnerFrom +
                 "&endDate=" + spinnerTo, new com.android.volley.Response.Listener<String>() {
@@ -215,19 +215,27 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
 
     private void getDataCurrencies() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
-                + getString(R.string.api_key), new com.android.volley.Response.Listener<String>() {
+                + getString(R.string.api_key1), new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj = new JSONObject(response);
-                    JSONObject mainObj2 = mainObj.getJSONObject("results");
+                    JSONObject results = mainObj.getJSONObject("results");
 
-                    Iterator<String> keys = mainObj2.keys();
+                    Iterator<String> keys = results.keys();
                     while (keys.hasNext()) {
                         String key = keys.next();
-                        if (mainObj2.get(key) instanceof JSONObject) {
-                            stringArrayListHistoryFrom.add(key);
-                            stringArrayListHistoryTo.add(key);
+                        if (results.get(key) instanceof JSONObject) {
+                            String valueCurrencySymbol = results.getString(key);
+                            JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
+                            if (mainObjKey.has("currencySymbol")) {
+                                String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
+                                stringArrayListHistoryFrom.add(key + "=" + valueCurrencySymbolGet);
+                                stringArrayListHistoryTo.add(key + "=" + valueCurrencySymbolGet);
+                            } else {
+                                stringArrayListHistoryFrom.add(key);
+                                stringArrayListHistoryTo.add(key);
+                            }
                         }
                     }
 
@@ -316,7 +324,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnHistory:
-                getDataHistory(getItemSpinnerFrom(), getItemSpinnerTo(), getItemSpinner3().substring(0, 10), getItemSpinner3().substring(12, 22));
+                getDataHistory(getItemSpinnerFrom().substring(0, 3), getItemSpinnerTo().substring(0, 3), getItemSpinner3().substring(0, 10), getItemSpinner3().substring(12, 22));
                 break;
         }
     }
