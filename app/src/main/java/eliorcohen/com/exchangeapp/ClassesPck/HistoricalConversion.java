@@ -116,6 +116,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                 yValuesTo.clear();
                 dataSetsFrom.clear();
                 dataSetsTo.clear();
+
                 mChartFrom.invalidate();
                 mChartTo.invalidate();
                 mChartFrom.clear();
@@ -123,27 +124,27 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                 try {
                     JSONObject mainObj = new JSONObject(response);
 
-                    JSONObject mainObj2 = mainObj.getJSONObject(fromHistory + "_" + toHistory);
-                    dateFrom1 = mainObj2.getDouble(getBeforeEightDateStringMiddle(0));
-                    dateFrom2 = mainObj2.getDouble(getBeforeEightDateStringMiddle(1));
-                    dateFrom3 = mainObj2.getDouble(getBeforeEightDateStringMiddle(2));
-                    dateFrom4 = mainObj2.getDouble(getBeforeEightDateStringMiddle(3));
-                    dateFrom5 = mainObj2.getDouble(getBeforeEightDateStringMiddle(4));
-                    dateFrom6 = mainObj2.getDouble(getBeforeEightDateStringMiddle(5));
-                    dateFrom7 = mainObj2.getDouble(getBeforeEightDateStringMiddle(6));
-                    dateFrom8 = mainObj2.getDouble(getBeforeEightDateStringMiddle(7));
-                    dateFrom9 = mainObj2.getDouble(getBeforeEightDateStringMiddle(8));
+                    JSONObject mainObjFromTo = mainObj.getJSONObject(fromHistory + "_" + toHistory);
+                    dateFrom1 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(0));
+                    dateFrom2 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(1));
+                    dateFrom3 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(2));
+                    dateFrom4 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(3));
+                    dateFrom5 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(4));
+                    dateFrom6 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(5));
+                    dateFrom7 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(6));
+                    dateFrom8 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(7));
+                    dateFrom9 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(8));
 
-                    JSONObject mainObj3 = mainObj.getJSONObject(toHistory + "_" + fromHistory);
-                    dateTo1 = mainObj3.getDouble(getBeforeEightDateStringMiddle(0));
-                    dateTo2 = mainObj3.getDouble(getBeforeEightDateStringMiddle(1));
-                    dateTo3 = mainObj3.getDouble(getBeforeEightDateStringMiddle(2));
-                    dateTo4 = mainObj3.getDouble(getBeforeEightDateStringMiddle(3));
-                    dateTo5 = mainObj3.getDouble(getBeforeEightDateStringMiddle(4));
-                    dateTo6 = mainObj3.getDouble(getBeforeEightDateStringMiddle(5));
-                    dateTo7 = mainObj3.getDouble(getBeforeEightDateStringMiddle(6));
-                    dateTo8 = mainObj3.getDouble(getBeforeEightDateStringMiddle(7));
-                    dateTo9 = mainObj3.getDouble(getBeforeEightDateStringMiddle(8));
+                    JSONObject mainObjToFrom = mainObj.getJSONObject(toHistory + "_" + fromHistory);
+                    dateTo1 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(0));
+                    dateTo2 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(1));
+                    dateTo3 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(2));
+                    dateTo4 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(3));
+                    dateTo5 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(4));
+                    dateTo6 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(5));
+                    dateTo7 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(6));
+                    dateTo8 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(7));
+                    dateTo9 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(8));
 
                     yValuesFrom.add(new Entry(0, (float) dateFrom1));
                     yValuesFrom.add(new Entry(1, (float) dateFrom2));
