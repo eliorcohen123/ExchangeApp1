@@ -23,7 +23,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -49,8 +48,9 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     private Legend legendFrom, legendTo;
     private LineDataSet setFrom, setTo;
     private LineData lineDataFrom, lineDataTo;
-    private ArrayList<String> stringArrayListHistoryFrom, stringArrayListHistoryTo, stringArrayListHistoryTime;
+    private ArrayList<String> stringArrayListHistoryFromTo, stringArrayListHistoryTime;
     private Spinner spinnerHistoryFrom, spinnerHistoryTo, spinnerHistoryTime;
+    private ArrayAdapter<String> arrayAdapterFromTo;
     private ImageView btnHistory;
     private int selectedColorText, selectedColorSeparate;
 
@@ -96,8 +96,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         yValuesTo = new ArrayList<>();
         dataSetsFrom = new ArrayList<>();
         dataSetsTo = new ArrayList<>();
-        stringArrayListHistoryFrom = new ArrayList<String>();
-        stringArrayListHistoryTo = new ArrayList<String>();
+        stringArrayListHistoryFromTo = new ArrayList<String>();
         stringArrayListHistoryTime = new ArrayList<String>();
     }
 
@@ -167,12 +166,14 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                     yValuesTo.add(new Entry(8, (float) dateTo9));
 
                     selectedColorText = Color.rgb(0, 204, 0);
+
                     selectedColorSeparate = Color.rgb(255, 255, 255);
 
                     yAxisRightFrom = mChartFrom.getAxisRight();
                     yAxisLeftFrom = mChartFrom.getAxisLeft();
                     xAxisFrom = mChartFrom.getXAxis();
                     legendFrom = mChartFrom.getLegend();
+
                     yAxisRightTo = mChartTo.getAxisRight();
                     yAxisLeftTo = mChartTo.getAxisLeft();
                     xAxisTo = mChartTo.getXAxis();
@@ -182,6 +183,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                     yAxisLeftFrom.setTextColor(selectedColorSeparate);
                     xAxisFrom.setTextColor(selectedColorSeparate);
                     legendFrom.setTextColor(selectedColorSeparate);
+
                     yAxisRightTo.setTextColor(selectedColorSeparate);
                     yAxisLeftTo.setTextColor(selectedColorSeparate);
                     xAxisTo.setTextColor(selectedColorSeparate);
@@ -241,20 +243,17 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                             JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
                             if (mainObjKey.has("currencySymbol")) {
                                 String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
-                                stringArrayListHistoryFrom.add(key + "=" + valueCurrencySymbolGet);
-                                stringArrayListHistoryTo.add(key + "=" + valueCurrencySymbolGet);
+                                stringArrayListHistoryFromTo.add(key + "=" + valueCurrencySymbolGet);
                             } else {
-                                stringArrayListHistoryFrom.add(key);
-                                stringArrayListHistoryTo.add(key);
+                                stringArrayListHistoryFromTo.add(key);
                             }
                         }
                     }
 
-                    getCollections(stringArrayListHistoryFrom);
-                    getCollections(stringArrayListHistoryTo);
+                    getCollections(stringArrayListHistoryFromTo);
 
-                    getSpinners(stringArrayListHistoryFrom, spinnerHistoryFrom);
-                    getSpinners(stringArrayListHistoryTo, spinnerHistoryTo);
+                    getSpinners(stringArrayListHistoryFromTo, spinnerHistoryFrom);
+                    getSpinners(stringArrayListHistoryFromTo, spinnerHistoryTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -279,9 +278,9 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     }
 
     private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, arrayList);
-        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(arrayAdapter);
+        arrayAdapterFromTo = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, arrayList);
+        arrayAdapterFromTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinner.setAdapter(arrayAdapterFromTo);
     }
 
     private void getSpinnerTime() {

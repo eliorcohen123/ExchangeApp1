@@ -26,7 +26,8 @@ import eliorcohen.com.exchangeapp.R;
 
 public class Conversion extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayList<String> stringArrayListExchFrom, stringArrayListExchTo;
+    private ArrayList<String> stringArrayListExchFromTo;
+    private ArrayAdapter<String> arrayAdapterFromTo;
     private Spinner spinnerExchFrom, spinnerExchTo;
     private ImageView myBtnConversion;
     private TextView myTextConversion;
@@ -61,8 +62,7 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         myBtnConversion = findViewById(R.id.myBtnConversion);
         myTextConversion = findViewById(R.id.myTextConversion);
 
-        stringArrayListExchFrom = new ArrayList<String>();
-        stringArrayListExchTo = new ArrayList<String>();
+        stringArrayListExchFromTo = new ArrayList<String>();
     }
 
     private void initListeners() {
@@ -86,20 +86,17 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
                             JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
                             if (mainObjKey.has("currencySymbol")) {
                                 String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
-                                stringArrayListExchFrom.add(key + "=" + valueCurrencySymbolGet);
-                                stringArrayListExchTo.add(key + "=" + valueCurrencySymbolGet);
+                                stringArrayListExchFromTo.add(key + "=" + valueCurrencySymbolGet);
                             } else {
-                                stringArrayListExchFrom.add(key);
-                                stringArrayListExchTo.add(key);
+                                stringArrayListExchFromTo.add(key);
                             }
                         }
                     }
 
-                    getCollections(stringArrayListExchFrom);
-                    getCollections(stringArrayListExchTo);
+                    getCollections(stringArrayListExchFromTo);
 
-                    getSpinners(stringArrayListExchFrom, spinnerExchFrom);
-                    getSpinners(stringArrayListExchTo, spinnerExchTo);
+                    getSpinners(stringArrayListExchFromTo, spinnerExchFrom);
+                    getSpinners(stringArrayListExchFromTo, spinnerExchTo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -148,9 +145,9 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     }
 
     private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, arrayList);
-        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(arrayAdapter);
+        arrayAdapterFromTo = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, arrayList);
+        arrayAdapterFromTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinner.setAdapter(arrayAdapterFromTo);
     }
 
     private String getItemSpinnerFrom() {
