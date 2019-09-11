@@ -42,8 +42,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     private ArrayList<ILineDataSet> dataSetsFrom, dataSetsTo;
     private double dateFrom1, dateFrom2, dateFrom3, dateFrom4, dateFrom5, dateFrom6, dateFrom7, dateFrom8, dateFrom9,
             dateTo1, dateTo2, dateTo3, dateTo4, dateTo5, dateTo6, dateTo7, dateTo8, dateTo9;
-    private YAxis yAxisRightFrom, yAxisRightTo;
-    private YAxis yAxisLeftFrom, yAxisLeftTo;
+    private YAxis yAxisRightFrom, yAxisRightTo, yAxisLeftFrom, yAxisLeftTo;
     private XAxis xAxisFrom, xAxisTo;
     private Legend legendFrom, legendTo;
     private LineDataSet setFrom, setTo;
