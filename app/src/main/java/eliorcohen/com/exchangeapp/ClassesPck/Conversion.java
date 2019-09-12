@@ -1,5 +1,6 @@
 package eliorcohen.com.exchangeapp.ClassesPck;
 
+import android.app.ProgressDialog;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,15 +23,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import eliorcohen.com.exchangeapp.OtherPck.SearchMovieInterface;
 import eliorcohen.com.exchangeapp.R;
 
-public class Conversion extends AppCompatActivity implements View.OnClickListener {
+public class Conversion extends AppCompatActivity implements SearchMovieInterface, View.OnClickListener {
 
     private ArrayList<String> stringArrayListExchFromTo;
     private ArrayAdapter<String> arrayAdapterFromTo;
     private Spinner spinnerExchFrom, spinnerExchTo;
     private ImageView myBtnConversion;
     private TextView myTextConversion;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
         myTextConversion = findViewById(R.id.myTextConversion);
 
         stringArrayListExchFromTo = new ArrayList<String>();
+
+        progressDialog = new ProgressDialog(this);
     }
 
     private void initListeners() {
@@ -121,6 +126,8 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
                     JSONObject mainObj = new JSONObject(response);
                     double nameConvert = mainObj.getDouble(fromExch + "_" + toExch);
                     myTextConversion.setText(String.valueOf(nameConvert));
+
+                    stopProgressDialog();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -161,10 +168,25 @@ public class Conversion extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
+    public void startProgressDialog() {
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+    }
+
+    @Override
+    public void stopProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.myBtnConversion:
                 getDataCurrconv(getItemSpinnerFrom().substring(0, 3), getItemSpinnerTo().substring(0, 3));
+
+                startProgressDialog();
                 break;
         }
     }

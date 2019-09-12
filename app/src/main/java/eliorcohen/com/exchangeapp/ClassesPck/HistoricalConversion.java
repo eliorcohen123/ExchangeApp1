@@ -1,5 +1,6 @@
 package eliorcohen.com.exchangeapp.ClassesPck;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -33,9 +34,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import eliorcohen.com.exchangeapp.OtherPck.SearchMovieInterface;
 import eliorcohen.com.exchangeapp.R;
 
-public class HistoricalConversion extends AppCompatActivity implements View.OnClickListener {
+public class HistoricalConversion extends AppCompatActivity implements SearchMovieInterface, View.OnClickListener {
 
     private LineChart mChartFrom, mChartTo;
     private ArrayList<Entry> yValuesFrom, yValuesTo;
@@ -52,6 +54,7 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     private ArrayAdapter<String> arrayAdapterFromTo;
     private ImageView btnHistory;
     private int selectedColorText, selectedColorSeparate;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +100,8 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
         dataSetsTo = new ArrayList<>();
         stringArrayListHistoryFromTo = new ArrayList<String>();
         stringArrayListHistoryTime = new ArrayList<String>();
+
+        progressDialog = new ProgressDialog(this);
     }
 
     private void initListeners() {
@@ -212,6 +217,8 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
                     dataSetsTo.add(setTo);
                     lineDataTo = new LineData(dataSetsTo);
                     mChartTo.setData(lineDataTo);
+
+                    stopProgressDialog();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -335,10 +342,25 @@ public class HistoricalConversion extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    public void startProgressDialog() {
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+    }
+
+    @Override
+    public void stopProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnHistory:
                 getDataHistory(getItemSpinnerFrom().substring(0, 3), getItemSpinnerTo().substring(0, 3), getItemSpinnerTime().substring(0, 10), getItemSpinnerTime().substring(12, 22));
+
+                startProgressDialog();
                 break;
         }
     }
