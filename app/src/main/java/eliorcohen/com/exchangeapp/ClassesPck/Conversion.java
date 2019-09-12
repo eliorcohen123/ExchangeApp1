@@ -23,10 +23,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import eliorcohen.com.exchangeapp.OtherPck.SearchMovieInterface;
+import eliorcohen.com.exchangeapp.OtherPck.ConversionInterface;
 import eliorcohen.com.exchangeapp.R;
 
-public class Conversion extends AppCompatActivity implements SearchMovieInterface, View.OnClickListener {
+public class Conversion extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
 
     private ArrayList<String> stringArrayListExchFromTo;
     private ArrayAdapter<String> arrayAdapterFromTo;

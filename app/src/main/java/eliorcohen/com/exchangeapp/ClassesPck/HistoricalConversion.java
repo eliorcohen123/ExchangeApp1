@@ -34,10 +34,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import eliorcohen.com.exchangeapp.OtherPck.SearchMovieInterface;
+import eliorcohen.com.exchangeapp.OtherPck.ConversionInterface;
 import eliorcohen.com.exchangeapp.R;
 
-public class HistoricalConversion extends AppCompatActivity implements SearchMovieInterface, View.OnClickListener {
+public class HistoricalConversion extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
 
     private LineChart mChartFrom, mChartTo;
     private ArrayList<Entry> yValuesFrom, yValuesTo;

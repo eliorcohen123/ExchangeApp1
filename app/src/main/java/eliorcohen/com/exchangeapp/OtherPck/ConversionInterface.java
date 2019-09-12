@@ -1,6 +1,6 @@
 package eliorcohen.com.exchangeapp.OtherPck;
 
-public interface SearchMovieInterface {
+public interface ConversionInterface {
 
     void startProgressDialog();
 
