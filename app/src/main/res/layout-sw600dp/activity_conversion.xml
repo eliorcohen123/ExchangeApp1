@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:text="@string/title_conversion"
         android:textColor="@color/colorGreenBlack"
-        android:textSize="60sp" />
+        android:textSize="75sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,13 +38,13 @@
                 android:gravity="center"
                 android:text="@string/from"
                 android:textColor="@color/colorYellow"
-                android:textSize="17sp" />
+                android:textSize="25sp" />
 
             <Spinner
                 android:id="@+id/spinnerExchFrom"
                 style="@android:style/Widget.Holo.Light.Spinner"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
+                android:layout_width="165dp"
+                android:layout_height="60dp"
                 android:ellipsize="marquee"
                 android:popupBackground="@color/colorPrimary"
                 android:theme="@style/spinnerTheme" />
@@ -54,8 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginLeft="75dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -66,13 +66,13 @@
                 android:gravity="center"
                 android:text="@string/to"
                 android:textColor="@color/colorYellow"
-                android:textSize="17sp" />
+                android:textSize="25sp" />
 
             <Spinner
                 android:id="@+id/spinnerExchTo"
                 style="@android:style/Widget.Holo.Light.Spinner"
-                android:layout_width="110dp"
-                android:layout_height="40dp"
+                android:layout_width="165dp"
+                android:layout_height="60dp"
                 android:ellipsize="marquee"
                 android:popupBackground="@color/colorPrimary"
                 android:theme="@style/spinnerTheme" />
@@ -87,7 +87,7 @@
         android:layout_marginTop="20dp"
         android:text="Amount:"
         android:textColor="@color/colorYellowDark"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/myEditTextAmountConversion"
@@ -101,7 +101,7 @@
         android:maxLength="10"
         android:text="1"
         android:textColor="@color/colorYellowDark"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/myTextConversion"
@@ -110,12 +110,12 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:textColor="@color/colorYellowDark"
-        android:textSize="25sp" />
+        android:textSize="38sp" />
 
     <ImageView
         android:id="@+id/myBtnConversion"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
         android:padding="1dp"

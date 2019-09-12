@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
     private ImageView myBtnConversion;
     private TextView myTextConversion;
     private ProgressDialog progressDialog;
+    private EditText myEditTextAmountConversion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
         spinnerExchTo = findViewById(R.id.spinnerExchTo);
         myBtnConversion = findViewById(R.id.myBtnConversion);
         myTextConversion = findViewById(R.id.myTextConversion);
+        myEditTextAmountConversion = findViewById(R.id.myEditTextAmountConversion);
 
         stringArrayListExchFromTo = new ArrayList<String>();
 
@@ -128,8 +131,9 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj = new JSONObject(response);
-                    double nameConvert = mainObj.getDouble(fromExch + "_" + toExch);
-                    myTextConversion.setText(String.valueOf(nameConvert));
+                    double AmountConvert = mainObj.getDouble(fromExch + "_" + toExch);
+                    double myAmount = Double.parseDouble(myEditTextAmountConversion.getText().toString());
+                    myTextConversion.setText(String.valueOf(myAmount * AmountConvert));
 
                     stopProgressDialog();
                 } catch (Exception e) {

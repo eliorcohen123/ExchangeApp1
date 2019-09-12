@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btnHistory"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="75dp"
+            android:layout_marginRight="75dp"
+            android:background="@color/colorPrimary"
+            android:padding="1dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_attach_money_green_24dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/from"
+                android:textColor="@color/colorYellow"
+                android:textSize="25sp" />
+
+            <Spinner
+                android:id="@+id/spinnerHistoryFrom"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="165dp"
+                android:layout_height="70dp"
+                android:ellipsize="marquee"
+                android:popupBackground="@color/colorPrimary"
+                android:theme="@style/spinnerTheme" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/to"
+                android:textColor="@color/colorYellow"
+                android:textSize="25sp" />
+
+            <Spinner
+                android:id="@+id/spinnerHistoryTo"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="165dp"
+                android:layout_height="70dp"
+                android:ellipsize="marquee"
+                android:popupBackground="@color/colorPrimary"
+                android:theme="@style/spinnerTheme" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/history"
+                android:textColor="@color/colorYellow"
+                android:textSize="25sp" />
+
+            <Spinner
+                android:id="@+id/spinnerHistory3"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="159dp"
+                android:layout_height="70dp"
+                android:ellipsize="marquee"
+                android:popupBackground="@color/colorPrimary"
+                android:theme="@style/spinnerTheme" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/fffimage" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/linechart1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/fffimage" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/linechart2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

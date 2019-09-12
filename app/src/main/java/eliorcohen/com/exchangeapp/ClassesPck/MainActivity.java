@@ -1,12 +1,14 @@
 package eliorcohen.com.exchangeapp.ClassesPck;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import eliorcohen.com.exchangeapp.R;
+import guy4444.smartrate.SmartRate;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initUI();
         initListeners();
+        initAppRater();
     }
 
     private void initUI() {
@@ -34,6 +37,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initListeners() {
         btnMyConverter.setOnClickListener(this);
         btnMyHistory.setOnClickListener(this);
+    }
+
+    private void initAppRater() {
+        SmartRate.Rate(MainActivity.this
+                , "Rate Us"
+                , "Tell others what you think about this app"
+                , "Continue"
+                , "Please take a moment and rate us on Google Play"
+                , "click here"
+                , "Ask me later"
+                , "Never ask again"
+                , "Cancel"
+                , "Thanks for the feedback"
+                , Color.parseColor("#2196F3")
+                , 5
+                , 1
+                , 1
+        );
     }
 
     @Override

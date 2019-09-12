@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/title_app"
+        android:textColor="@color/colorGreenBlack"
+        android:textSize="60sp" />
+
+    <Button
+        android:id="@+id/btnMyConverter"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/btn_conversion"
+        android:textColor="@color/colorYellowDark" />
+
+    <Button
+        android:id="@+id/btnMyHistory"
+        android:layout_width="255dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/btn_history_conversion"
+        android:textColor="@color/colorYellowDark" />
+</LinearLayout>
