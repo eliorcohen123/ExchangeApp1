@@ -102,6 +102,8 @@ public class HistoricalConversion extends AppCompatActivity implements SearchMov
         stringArrayListHistoryTime = new ArrayList<String>();
 
         progressDialog = new ProgressDialog(this);
+
+        startProgressDialog();
     }
 
     private void initListeners() {
@@ -261,6 +263,8 @@ public class HistoricalConversion extends AppCompatActivity implements SearchMov
 
                     getSpinners(stringArrayListHistoryFromTo, spinnerHistoryFrom);
                     getSpinners(stringArrayListHistoryFromTo, spinnerHistoryTo);
+
+                    stopProgressDialog();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -68,6 +68,8 @@ public class Conversion extends AppCompatActivity implements SearchMovieInterfac
         stringArrayListExchFromTo = new ArrayList<String>();
 
         progressDialog = new ProgressDialog(this);
+
+        startProgressDialog();
     }
 
     private void initListeners() {
@@ -102,6 +104,8 @@ public class Conversion extends AppCompatActivity implements SearchMovieInterfac
 
                     getSpinners(stringArrayListExchFromTo, spinnerExchFrom);
                     getSpinners(stringArrayListExchFromTo, spinnerExchTo);
+
+                    stopProgressDialog();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
