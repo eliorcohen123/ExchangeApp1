@@ -6,7 +6,7 @@ android {
         applicationId "eliorcohen.com.exchangeapp"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 4
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
