@@ -81,44 +81,38 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
 
     private void getDataCurrencies() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
-                + getString(R.string.api_key2), new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject mainObj = new JSONObject(response);
-                    JSONObject results = mainObj.getJSONObject("results");
+                + getString(R.string.api_key2), response -> {
+                    try {
+                        JSONObject mainObj = new JSONObject(response);
+                        JSONObject results = mainObj.getJSONObject("results");
 
-                    Iterator<String> keys = results.keys();
-                    while (keys.hasNext()) {
-                        String key = keys.next();
-                        if (results.get(key) instanceof JSONObject) {
-                            String valueCurrencySymbol = results.getString(key);
-                            JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
-                            if (mainObjKey.has("currencySymbol")) {
-                                String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
-                                stringArrayListExchFromTo.add(key + "=" + valueCurrencySymbolGet);
-                            } else {
-                                stringArrayListExchFromTo.add(key);
+                        Iterator<String> keys = results.keys();
+                        while (keys.hasNext()) {
+                            String key = keys.next();
+                            if (results.get(key) instanceof JSONObject) {
+                                String valueCurrencySymbol = results.getString(key);
+                                JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
+                                if (mainObjKey.has("currencySymbol")) {
+                                    String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
+                                    stringArrayListExchFromTo.add(key + "=" + valueCurrencySymbolGet);
+                                } else {
+                                    stringArrayListExchFromTo.add(key);
+                                }
                             }
                         }
+
+                        getCollections(stringArrayListExchFromTo);
+
+                        getSpinners(stringArrayListExchFromTo, spinnerExchFrom);
+                        getSpinners(stringArrayListExchFromTo, spinnerExchTo);
+
+                        stopProgressDialog();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                }, error -> {
 
-                    getCollections(stringArrayListExchFromTo);
-
-                    getSpinners(stringArrayListExchFromTo, spinnerExchFrom);
-                    getSpinners(stringArrayListExchFromTo, spinnerExchTo);
-
-                    stopProgressDialog();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
+                });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
@@ -126,37 +120,26 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
     private void getDataCurrconv(final String fromExch, final String toExch) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/convert?q="
                 + fromExch + "_" + toExch +
-                "&compact=ultra&apiKey=" + getString(R.string.api_key1), new com.android.volley.Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject mainObj = new JSONObject(response);
-                    double AmountConvert = mainObj.getDouble(fromExch + "_" + toExch);
-                    double myAmount = Double.parseDouble(myEditTextAmountConversion.getText().toString());
-                    myTextConversion.setText(String.valueOf(myAmount * AmountConvert));
+                "&compact=ultra&apiKey=" + getString(R.string.api_key1), response -> {
+                    try {
+                        JSONObject mainObj = new JSONObject(response);
+                        double AmountConvert = mainObj.getDouble(fromExch + "_" + toExch);
+                        double myAmount = Double.parseDouble(myEditTextAmountConversion.getText().toString());
+                        myTextConversion.setText(String.valueOf(myAmount * AmountConvert));
 
-                    stopProgressDialog();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                        stopProgressDialog();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
 
-            }
-        });
+                });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
     private void getCollections(ArrayList<String> arrayList) {
-        Collections.sort(arrayList, new Comparator<String>() {
-            @Override
-            public int compare(String s1, String s2) {
-                return s1.compareToIgnoreCase(s2);
-            }
-        });
+        Collections.sort(arrayList, (s1, s2) -> s1.compareToIgnoreCase(s2));
     }
 
     private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
