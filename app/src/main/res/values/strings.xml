@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Stock Exchange World</string>
-    <string name="api_key1">API_KEY</string>
-    <string name="api_key2">API_KEY</string>
+    <string name="api_key1">12ad39294dfac1f8c602</string>
+    <string name="api_key2">f33a8612ad1667f8b798</string>
     <string name="title_app">Stock Exchange \n World!</string>
     <string name="btn_conversion">Conversion</string>
     <string name="btn_history_conversion">History Conversion</string>

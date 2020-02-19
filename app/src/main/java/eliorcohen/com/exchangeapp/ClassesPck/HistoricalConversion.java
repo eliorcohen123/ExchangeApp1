@@ -49,7 +49,6 @@ public class HistoricalConversion extends AppCompatActivity implements Conversio
     private LineData lineDataFrom, lineDataTo;
     private ArrayList<String> stringArrayListHistoryFromTo, stringArrayListHistoryTime;
     private Spinner spinnerHistoryFrom, spinnerHistoryTo, spinnerHistoryTime;
-    private ArrayAdapter<String> arrayAdapterFromTo;
     private ImageView btnHistory;
     private int selectedColorText, selectedColorSeparate;
     private ProgressDialog progressDialog;
@@ -114,115 +113,115 @@ public class HistoricalConversion extends AppCompatActivity implements Conversio
                 "&q=" + fromHistory + "_" + toHistory + "," + toHistory + "_" + fromHistory + "&compact=ultra&date="
                 + spinnerFrom +
                 "&endDate=" + spinnerTo, response -> {
-                    yValuesFrom.clear();
-                    yValuesTo.clear();
-                    dataSetsFrom.clear();
-                    dataSetsTo.clear();
+            yValuesFrom.clear();
+            yValuesTo.clear();
+            dataSetsFrom.clear();
+            dataSetsTo.clear();
 
-                    mChartFrom.invalidate();
-                    mChartTo.invalidate();
-                    mChartFrom.clear();
-                    mChartTo.clear();
-                    try {
-                        JSONObject mainObj = new JSONObject(response);
+            mChartFrom.invalidate();
+            mChartTo.invalidate();
+            mChartFrom.clear();
+            mChartTo.clear();
+            try {
+                JSONObject mainObj = new JSONObject(response);
 
-                        JSONObject mainObjFromTo = mainObj.getJSONObject(fromHistory + "_" + toHistory);
-                        dateFrom1 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(0));
-                        dateFrom2 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(1));
-                        dateFrom3 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(2));
-                        dateFrom4 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(3));
-                        dateFrom5 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(4));
-                        dateFrom6 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(5));
-                        dateFrom7 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(6));
-                        dateFrom8 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(7));
-                        dateFrom9 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(8));
+                JSONObject mainObjFromTo = mainObj.getJSONObject(fromHistory + "_" + toHistory);
+                dateFrom1 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(0));
+                dateFrom2 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(1));
+                dateFrom3 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(2));
+                dateFrom4 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(3));
+                dateFrom5 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(4));
+                dateFrom6 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(5));
+                dateFrom7 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(6));
+                dateFrom8 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(7));
+                dateFrom9 = mainObjFromTo.getDouble(getBeforeEightDateStringMiddle(8));
 
-                        JSONObject mainObjToFrom = mainObj.getJSONObject(toHistory + "_" + fromHistory);
-                        dateTo1 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(0));
-                        dateTo2 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(1));
-                        dateTo3 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(2));
-                        dateTo4 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(3));
-                        dateTo5 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(4));
-                        dateTo6 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(5));
-                        dateTo7 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(6));
-                        dateTo8 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(7));
-                        dateTo9 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(8));
+                JSONObject mainObjToFrom = mainObj.getJSONObject(toHistory + "_" + fromHistory);
+                dateTo1 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(0));
+                dateTo2 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(1));
+                dateTo3 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(2));
+                dateTo4 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(3));
+                dateTo5 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(4));
+                dateTo6 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(5));
+                dateTo7 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(6));
+                dateTo8 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(7));
+                dateTo9 = mainObjToFrom.getDouble(getBeforeEightDateStringMiddle(8));
 
-                        yValuesFrom.add(new Entry(0, (float) dateFrom1));
-                        yValuesFrom.add(new Entry(1, (float) dateFrom2));
-                        yValuesFrom.add(new Entry(2, (float) dateFrom3));
-                        yValuesFrom.add(new Entry(3, (float) dateFrom4));
-                        yValuesFrom.add(new Entry(4, (float) dateFrom5));
-                        yValuesFrom.add(new Entry(5, (float) dateFrom6));
-                        yValuesFrom.add(new Entry(6, (float) dateFrom7));
-                        yValuesFrom.add(new Entry(7, (float) dateFrom8));
-                        yValuesFrom.add(new Entry(8, (float) dateFrom9));
+                yValuesFrom.add(new Entry(0, (float) dateFrom1));
+                yValuesFrom.add(new Entry(1, (float) dateFrom2));
+                yValuesFrom.add(new Entry(2, (float) dateFrom3));
+                yValuesFrom.add(new Entry(3, (float) dateFrom4));
+                yValuesFrom.add(new Entry(4, (float) dateFrom5));
+                yValuesFrom.add(new Entry(5, (float) dateFrom6));
+                yValuesFrom.add(new Entry(6, (float) dateFrom7));
+                yValuesFrom.add(new Entry(7, (float) dateFrom8));
+                yValuesFrom.add(new Entry(8, (float) dateFrom9));
 
-                        yValuesTo.add(new Entry(0, (float) dateTo1));
-                        yValuesTo.add(new Entry(1, (float) dateTo2));
-                        yValuesTo.add(new Entry(2, (float) dateTo3));
-                        yValuesTo.add(new Entry(3, (float) dateTo4));
-                        yValuesTo.add(new Entry(4, (float) dateTo5));
-                        yValuesTo.add(new Entry(5, (float) dateTo6));
-                        yValuesTo.add(new Entry(6, (float) dateTo7));
-                        yValuesTo.add(new Entry(7, (float) dateTo8));
-                        yValuesTo.add(new Entry(8, (float) dateTo9));
+                yValuesTo.add(new Entry(0, (float) dateTo1));
+                yValuesTo.add(new Entry(1, (float) dateTo2));
+                yValuesTo.add(new Entry(2, (float) dateTo3));
+                yValuesTo.add(new Entry(3, (float) dateTo4));
+                yValuesTo.add(new Entry(4, (float) dateTo5));
+                yValuesTo.add(new Entry(5, (float) dateTo6));
+                yValuesTo.add(new Entry(6, (float) dateTo7));
+                yValuesTo.add(new Entry(7, (float) dateTo8));
+                yValuesTo.add(new Entry(8, (float) dateTo9));
 
-                        selectedColorText = Color.rgb(0, 204, 0);
+                selectedColorText = Color.rgb(0, 204, 0);
 
-                        selectedColorSeparate = Color.rgb(255, 255, 255);
+                selectedColorSeparate = Color.rgb(255, 255, 255);
 
-                        yAxisRightFrom = mChartFrom.getAxisRight();
-                        yAxisLeftFrom = mChartFrom.getAxisLeft();
-                        xAxisFrom = mChartFrom.getXAxis();
-                        legendFrom = mChartFrom.getLegend();
+                yAxisRightFrom = mChartFrom.getAxisRight();
+                yAxisLeftFrom = mChartFrom.getAxisLeft();
+                xAxisFrom = mChartFrom.getXAxis();
+                legendFrom = mChartFrom.getLegend();
 
-                        yAxisRightTo = mChartTo.getAxisRight();
-                        yAxisLeftTo = mChartTo.getAxisLeft();
-                        xAxisTo = mChartTo.getXAxis();
-                        legendTo = mChartTo.getLegend();
+                yAxisRightTo = mChartTo.getAxisRight();
+                yAxisLeftTo = mChartTo.getAxisLeft();
+                xAxisTo = mChartTo.getXAxis();
+                legendTo = mChartTo.getLegend();
 
-                        yAxisRightFrom.setTextColor(selectedColorSeparate);
-                        yAxisLeftFrom.setTextColor(selectedColorSeparate);
-                        xAxisFrom.setTextColor(selectedColorSeparate);
-                        legendFrom.setTextColor(selectedColorSeparate);
+                yAxisRightFrom.setTextColor(selectedColorSeparate);
+                yAxisLeftFrom.setTextColor(selectedColorSeparate);
+                xAxisFrom.setTextColor(selectedColorSeparate);
+                legendFrom.setTextColor(selectedColorSeparate);
 
-                        yAxisRightTo.setTextColor(selectedColorSeparate);
-                        yAxisLeftTo.setTextColor(selectedColorSeparate);
-                        xAxisTo.setTextColor(selectedColorSeparate);
-                        legendTo.setTextColor(selectedColorSeparate);
+                yAxisRightTo.setTextColor(selectedColorSeparate);
+                yAxisLeftTo.setTextColor(selectedColorSeparate);
+                xAxisTo.setTextColor(selectedColorSeparate);
+                legendTo.setTextColor(selectedColorSeparate);
 
-                        setFrom = new LineDataSet(yValuesFrom, "Exchange set " + fromHistory + " to " + toHistory);
-                        setFrom.setFillAlpha(110);
-                        setFrom.setLineWidth(3f);
-                        setFrom.setValueTextSize(10f);
-                        setFrom.setColor(Color.RED);
-                        setFrom.setValueTextColor(selectedColorText);
-                        setFrom.setCircleColorHole(Color.CYAN);
+                setFrom = new LineDataSet(yValuesFrom, "Exchange set " + fromHistory + " to " + toHistory);
+                setFrom.setFillAlpha(110);
+                setFrom.setLineWidth(3f);
+                setFrom.setValueTextSize(10f);
+                setFrom.setColor(Color.RED);
+                setFrom.setValueTextColor(selectedColorText);
+                setFrom.setCircleColorHole(Color.CYAN);
 
-                        setTo = new LineDataSet(yValuesTo, "Exchange set " + toHistory + " to " + fromHistory);
-                        setTo.setFillAlpha(110);
-                        setTo.setLineWidth(3f);
-                        setTo.setValueTextSize(10f);
-                        setTo.setColor(Color.BLUE);
-                        setTo.setValueTextColor(selectedColorText);
-                        setTo.setCircleColorHole(Color.CYAN);
+                setTo = new LineDataSet(yValuesTo, "Exchange set " + toHistory + " to " + fromHistory);
+                setTo.setFillAlpha(110);
+                setTo.setLineWidth(3f);
+                setTo.setValueTextSize(10f);
+                setTo.setColor(Color.BLUE);
+                setTo.setValueTextColor(selectedColorText);
+                setTo.setCircleColorHole(Color.CYAN);
 
-                        dataSetsFrom.add(setFrom);
-                        lineDataFrom = new LineData(dataSetsFrom);
-                        mChartFrom.setData(lineDataFrom);
+                dataSetsFrom.add(setFrom);
+                lineDataFrom = new LineData(dataSetsFrom);
+                mChartFrom.setData(lineDataFrom);
 
-                        dataSetsTo.add(setTo);
-                        lineDataTo = new LineData(dataSetsTo);
-                        mChartTo.setData(lineDataTo);
+                dataSetsTo.add(setTo);
+                lineDataTo = new LineData(dataSetsTo);
+                mChartTo.setData(lineDataTo);
 
-                        stopProgressDialog();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }, error -> {
+                stopProgressDialog();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, error -> {
 
-                });
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
@@ -230,49 +229,49 @@ public class HistoricalConversion extends AppCompatActivity implements Conversio
     private void getDataCurrencies() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
                 + getString(R.string.api_key1), response -> {
-                    try {
-                        JSONObject mainObj = new JSONObject(response);
-                        JSONObject results = mainObj.getJSONObject("results");
+            try {
+                JSONObject mainObj = new JSONObject(response);
+                JSONObject results = mainObj.getJSONObject("results");
 
-                        Iterator<String> keys = results.keys();
-                        while (keys.hasNext()) {
-                            String key = keys.next();
-                            if (results.get(key) instanceof JSONObject) {
-                                String valueCurrencySymbol = results.getString(key);
-                                JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
-                                if (mainObjKey.has("currencySymbol")) {
-                                    String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
-                                    stringArrayListHistoryFromTo.add(key + "=" + valueCurrencySymbolGet);
-                                } else {
-                                    stringArrayListHistoryFromTo.add(key);
-                                }
-                            }
+                Iterator<String> keys = results.keys();
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    if (results.get(key) instanceof JSONObject) {
+                        String valueCurrencySymbol = results.getString(key);
+                        JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
+                        if (mainObjKey.has("currencySymbol")) {
+                            String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
+                            stringArrayListHistoryFromTo.add(key + "=" + valueCurrencySymbolGet);
+                        } else {
+                            stringArrayListHistoryFromTo.add(key);
                         }
-
-                        getCollections(stringArrayListHistoryFromTo);
-
-                        getSpinners(stringArrayListHistoryFromTo, spinnerHistoryFrom);
-                        getSpinners(stringArrayListHistoryFromTo, spinnerHistoryTo);
-
-                        stopProgressDialog();
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                }, error -> {
+                }
 
-                });
+                getCollections(stringArrayListHistoryFromTo);
+
+                createSpinner(stringArrayListHistoryFromTo, spinnerHistoryFrom);
+                createSpinner(stringArrayListHistoryFromTo, spinnerHistoryTo);
+
+                stopProgressDialog();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
     private void getCollections(ArrayList<String> arrayList) {
-        Collections.sort(arrayList, (s1, s2) -> s1.compareToIgnoreCase(s2));
+        Collections.sort(arrayList, String::compareToIgnoreCase);
     }
 
-    private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
-        arrayAdapterFromTo = new ArrayAdapter<String>(HistoricalConversion.this, R.layout.spinner_item, arrayList);
-        arrayAdapterFromTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(arrayAdapterFromTo);
+    private void createSpinner(ArrayList<String> arrayList, Spinner spinner) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinner.setAdapter(arrayAdapter);
     }
 
     private void getSpinnerTime() {
@@ -287,7 +286,7 @@ public class HistoricalConversion extends AppCompatActivity implements Conversio
             }
         }
 
-        getSpinners(stringArrayListHistoryTime, spinnerHistoryTime);
+        createSpinner(stringArrayListHistoryTime, spinnerHistoryTime);
     }
 
     private String getItemSpinnerFrom() {

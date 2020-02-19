@@ -28,7 +28,6 @@ import eliorcohen.com.exchangeapp.R;
 public class Conversion extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
 
     private ArrayList<String> stringArrayListExchFromTo;
-    private ArrayAdapter<String> arrayAdapterFromTo;
     private Spinner spinnerExchFrom, spinnerExchTo;
     private ImageView myBtnConversion;
     private TextView myTextConversion;
@@ -80,37 +79,37 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
     private void getDataCurrencies() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/currencies?apiKey="
                 + getString(R.string.api_key2), response -> {
-                    try {
-                        JSONObject mainObj = new JSONObject(response);
-                        JSONObject results = mainObj.getJSONObject("results");
+            try {
+                JSONObject mainObj = new JSONObject(response);
+                JSONObject results = mainObj.getJSONObject("results");
 
-                        Iterator<String> keys = results.keys();
-                        while (keys.hasNext()) {
-                            String key = keys.next();
-                            if (results.get(key) instanceof JSONObject) {
-                                String valueCurrencySymbol = results.getString(key);
-                                JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
-                                if (mainObjKey.has("currencySymbol")) {
-                                    String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
-                                    stringArrayListExchFromTo.add(key + "=" + valueCurrencySymbolGet);
-                                } else {
-                                    stringArrayListExchFromTo.add(key);
-                                }
-                            }
+                Iterator<String> keys = results.keys();
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    if (results.get(key) instanceof JSONObject) {
+                        String valueCurrencySymbol = results.getString(key);
+                        JSONObject mainObjKey = new JSONObject(valueCurrencySymbol);
+                        if (mainObjKey.has("currencySymbol")) {
+                            String valueCurrencySymbolGet = mainObjKey.getString("currencySymbol");
+                            stringArrayListExchFromTo.add(key + "=" + valueCurrencySymbolGet);
+                        } else {
+                            stringArrayListExchFromTo.add(key);
                         }
-
-                        getCollections(stringArrayListExchFromTo);
-
-                        getSpinners(stringArrayListExchFromTo, spinnerExchFrom);
-                        getSpinners(stringArrayListExchFromTo, spinnerExchTo);
-
-                        stopProgressDialog();
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                }, error -> {
+                }
 
-                });
+                getCollections(stringArrayListExchFromTo);
+
+                createSpinner(stringArrayListExchFromTo, spinnerExchFrom);
+                createSpinner(stringArrayListExchFromTo, spinnerExchTo);
+
+                stopProgressDialog();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
@@ -119,31 +118,31 @@ public class Conversion extends AppCompatActivity implements ConversionInterface
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://free.currconv.com/api/v7/convert?q="
                 + fromExch + "_" + toExch +
                 "&compact=ultra&apiKey=" + getString(R.string.api_key1), response -> {
-                    try {
-                        JSONObject mainObj = new JSONObject(response);
-                        double AmountConvert = mainObj.getDouble(fromExch + "_" + toExch);
-                        double myAmount = Double.parseDouble(myEditTextAmountConversion.getText().toString());
-                        myTextConversion.setText(String.valueOf(myAmount * AmountConvert));
+            try {
+                JSONObject mainObj = new JSONObject(response);
+                double AmountConvert = mainObj.getDouble(fromExch + "_" + toExch);
+                double myAmount = Double.parseDouble(myEditTextAmountConversion.getText().toString());
+                myTextConversion.setText(String.valueOf(myAmount * AmountConvert));
 
-                        stopProgressDialog();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }, error -> {
+                stopProgressDialog();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, error -> {
 
-                });
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
     private void getCollections(ArrayList<String> arrayList) {
-        Collections.sort(arrayList, (s1, s2) -> s1.compareToIgnoreCase(s2));
+        Collections.sort(arrayList, String::compareToIgnoreCase);
     }
 
-    private void getSpinners(ArrayList<String> arrayList, Spinner spinner) {
-        arrayAdapterFromTo = new ArrayAdapter<String>(Conversion.this, R.layout.spinner_item, arrayList);
-        arrayAdapterFromTo.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
-        spinner.setAdapter(arrayAdapterFromTo);
+    private void createSpinner(ArrayList<String> arrayList, Spinner spinner) {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, arrayList);
+        arrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item); // The drop down view
+        spinner.setAdapter(arrayAdapter);
     }
 
     private String getItemSpinnerFrom() {
