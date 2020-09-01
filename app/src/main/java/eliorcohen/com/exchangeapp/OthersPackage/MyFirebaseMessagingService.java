@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp.OtherPackage;
+package eliorcohen.com.exchangeapp.OthersPackage;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
