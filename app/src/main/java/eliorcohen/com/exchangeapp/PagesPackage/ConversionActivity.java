@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp.ClassesPck;
+package eliorcohen.com.exchangeapp.PagesPackage;
 
 import android.app.ProgressDialog;
 import android.os.StrictMode;
@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import eliorcohen.com.exchangeapp.OtherPck.ConversionInterface;
+import eliorcohen.com.exchangeapp.InterfacesPackage.ConversionInterface;
 import eliorcohen.com.exchangeapp.R;
 
-public class Conversion extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
+public class ConversionActivity extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
 
     private ArrayList<String> stringArrayListExchFromTo;
     private Spinner spinnerExchFrom, spinnerExchTo;

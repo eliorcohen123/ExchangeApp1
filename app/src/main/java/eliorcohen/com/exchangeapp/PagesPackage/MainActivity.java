@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp.ClassesPck;
+package eliorcohen.com.exchangeapp.PagesPackage;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnMyConverter:
-                Intent intentConversion = new Intent(this, Conversion.class);
+                Intent intentConversion = new Intent(this, ConversionActivity.class);
                 startActivity(intentConversion);
                 break;
             case R.id.btnMyHistory:
-                Intent intentHistory = new Intent(this, HistoricalConversion.class);
+                Intent intentHistory = new Intent(this, HistoricalConversionActivity.class);
                 startActivity(intentHistory);
                 break;
         }

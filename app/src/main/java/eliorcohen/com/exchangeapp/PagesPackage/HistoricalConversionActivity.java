@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp.ClassesPck;
+package eliorcohen.com.exchangeapp.PagesPackage;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -32,10 +32,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 
-import eliorcohen.com.exchangeapp.OtherPck.ConversionInterface;
+import eliorcohen.com.exchangeapp.InterfacesPackage.ConversionInterface;
 import eliorcohen.com.exchangeapp.R;
 
-public class HistoricalConversion extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
+public class HistoricalConversionActivity extends AppCompatActivity implements ConversionInterface, View.OnClickListener {
 
     private LineChart mChartFrom, mChartTo;
     private ArrayList<Entry> yValuesFrom, yValuesTo;

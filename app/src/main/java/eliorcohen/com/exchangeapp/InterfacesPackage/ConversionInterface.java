@@ -1,4 +1,4 @@
-package eliorcohen.com.exchangeapp.OtherPck;
+package eliorcohen.com.exchangeapp.InterfacesPackage;
 
 public interface ConversionInterface {
 
