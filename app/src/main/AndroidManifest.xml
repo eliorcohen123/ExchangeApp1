@@ -33,7 +33,7 @@
             android:name=".PagesPackage.HistoricalConversionActivity"
             android:screenOrientation="landscape" />
 
-        <service android:name=".OtherPackage.MyFirebaseMessagingService">
+        <service android:name=".OthersPackage.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

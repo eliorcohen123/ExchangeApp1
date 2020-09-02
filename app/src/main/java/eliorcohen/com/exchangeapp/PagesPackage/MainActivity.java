@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (NullPointerException e) {
 
         }
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
 
         initUI();
         initListeners();
